@@ -13,7 +13,7 @@ public class Outcast {
     // given an array of WordNet nouns, return an outcast
     public String outcast(String[] nouns) {
         int maxDist = -1;
-        String out = "";
+        String result = "";
         for (String n : nouns) {
             int d = 0;
 
@@ -22,10 +22,10 @@ public class Outcast {
             }
             if (d > maxDist) {
                 maxDist = d;
-                out = n;
+                result = n;
             }
         }
-        return out;
+        return result;
     }
 
     // for unit testing of this class (such as the one below)

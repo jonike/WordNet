@@ -23,7 +23,7 @@ public class SAP {
     // ancestral bfs; -1 if no such bfs
     public int ancestor(int v, int w) {
         checkInput(v, w);
-        int an = -1;
+        int result = -1;
         int shortestLength = Integer.MAX_VALUE;
         bfs1 = new BreadthFirstDirectedPaths(G, v);
         bfs2 = new BreadthFirstDirectedPaths(G, w);
@@ -32,11 +32,11 @@ public class SAP {
                 int dist = bfs1.distTo(i) + bfs2.distTo(i);
                 if (dist < shortestLength) {
                     shortestLength = dist;
-                    an = i;
+                    result = i;
                 }
             }                
         }
-        return an;
+        return result;
     }
 
     // length of shortest ancestral bfs between any vertex in v and any 
@@ -52,7 +52,7 @@ public class SAP {
     // -1 if no such bfs
     public int ancestor(Iterable<Integer> v, Iterable<Integer> w) {
         checkInput(v, w);
-        int an = -1;
+        int result = -1;
         int shortestLength = Integer.MAX_VALUE;
         bfs1 = new BreadthFirstDirectedPaths(G, v);
         bfs2 = new BreadthFirstDirectedPaths(G, w);
@@ -61,18 +61,16 @@ public class SAP {
                 int dist = bfs1.distTo(i) + bfs2.distTo(i);
                 if (dist < shortestLength) {
                     shortestLength = dist;
-                    an = i;
+                    result = i;
                 }
             }                
         }
-        return an;
+        return result;
     }
     
     // Helper methods for validate input argument
     private void checkInput(int v, int w) {
-        if (v < 0 || v > G.V()-1) 
-            throw new java.lang.IndexOutOfBoundsException();
-        if (w < 0 || w > G.V()-1) 
+        if (v < 0 || v > G.V()-1 || w < 0 || w > G.V()-1) 
             throw new java.lang.IndexOutOfBoundsException();
     }
     
