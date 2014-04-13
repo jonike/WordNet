@@ -4,7 +4,6 @@
  */
 public class Outcast {
     private final WordNet wn;
-    //private final ArrayList<String> nounList;
 
     // constructor takes a WordNet object
     public Outcast(WordNet wordnet) {
@@ -17,11 +16,10 @@ public class Outcast {
         String out = "";
         for (String n : nouns) {
             int d = 0;
-            //StdOut.println(n);
+
             for (String m : nouns) {
                 d = d + wn.distance(n, m);
             }
-            //StdOut.println(d);
             if (d > maxDist) {
                 maxDist = d;
                 out = n;

@@ -41,8 +41,8 @@ public class WordNet {
         if (ids.size() > 1) throw new java.lang.IllegalArgumentException();
     }
     
-    private Map<String, ArrayList<Integer>> buildSynMap(String synsets) {
-        In in = new In(synsets);
+    private Map<String, ArrayList<Integer>> buildSynMap(String filepath) {
+        In in = new In(filepath);
         Map<String, ArrayList<Integer>> map = new HashMap<>();
         
         while (in.hasNextLine()) {      
@@ -61,8 +61,8 @@ public class WordNet {
         return map;
     }
     
-    private Map<Integer, ArrayList<Integer>> buildHynMap(String hypernyms) {
-        In in = new In(hypernyms);
+    private Map<Integer, ArrayList<Integer>> buildHynMap(String filepath) {
+        In in = new In(filepath);
         Map<Integer, ArrayList<Integer>> map = new HashMap<>();
         
         while (in.hasNextLine()) {  
@@ -100,8 +100,7 @@ public class WordNet {
 
     // distance between nounA and nounB (defined below)
     public int distance(String nounA, String nounB) {
-        if (!isNoun(nounA)) throw new java.lang.IllegalArgumentException();
-        if (!isNoun(nounB)) throw new java.lang.IllegalArgumentException();
+        checkNouns(nounA, nounB);
 
         ArrayList<Integer> idA = nounIdMap.get(nounA);
         ArrayList<Integer> idB = nounIdMap.get(nounB);        
@@ -111,13 +110,17 @@ public class WordNet {
     // a synset (second field of synsets.txt) that is the common ancestor 
     // of nounA and nounB in a shortest ancestral path (defined below)
     public String sap(String nounA, String nounB) {
-        if (!isNoun(nounA)) throw new java.lang.IllegalArgumentException();
-        if (!isNoun(nounB)) throw new java.lang.IllegalArgumentException();
+        checkNouns(nounA, nounB);
         
         ArrayList<Integer> idA = nounIdMap.get(nounA);
         ArrayList<Integer> idB = nounIdMap.get(nounB);
         int idAn = sap.ancestor(idA, idB);        
         return origList.get(idAn);
+    }
+    
+    private void checkNouns(String nounA, String nounB) {
+        if (!isNoun(nounA)) throw new java.lang.IllegalArgumentException();
+        if (!isNoun(nounB)) throw new java.lang.IllegalArgumentException();
     }
 
     // for unit testing of this class
